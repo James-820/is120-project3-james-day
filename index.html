@@ -3,10 +3,37 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Workout Tracker</title>
+    <title>Lift Tracker</title>
     <link rel="stylesheet" href="style.css" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script defer src="script.js"></script>
   </head>
-  <body></body>
+  <body>
+    <header>
+      <h1>Lifting Tracker</h1>
+      <p>
+        For each lift, recorded below are the number of reps each set at a
+        specific weight.
+      </p>
+    </header>
+
+    <main>
+      <section>
+        <h2>Add New Lift:</h2>
+        <div>
+          <label for="in-name">Name of lift:</label
+          ><input type="text" id="in-name" />
+        </div>
+        <div>
+          <label for="in-weight">Starting weight:</label
+          ><input type="text" id="in-weight" />
+        </div>
+      </section>
+
+      <section id="lifts">
+        <h2>Lifts:</h2>
+        <div id="card-container"></div>
+      </section>
+    </main>
+  </body>
 </html>

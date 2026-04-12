@@ -4,15 +4,54 @@ const db = supabase.createClient(
   "sb_publishable_1ea-DNH4krkYWXU5K45PVg_V6jZGV9L",
 );
 
+let card_container = document.querySelector("#card-container");
+
 // Function declarations:
 // ================================================================================
 
 // Render function:
 // ========================================
 function renderAll(t_data) {
+  // Clear the card container:
+  card_container.innerHTML = "";
   for (const object of t_data) {
-    // Make a new div to display information:
+    // Make a new card to display information:
+    let card = document.createElement("div");
+    card.classList = "card";
+    card.id = object.id;
+    // Make all the information elements and append to the card:
+    // Delete button:
+    let btn = document.createElement("button");
+    btn.classList = "delete-btn";
+    btn.textContent = "Delete";
+    btn.addEventListener("click", () => deleteRow(object.id));
+    card.appendChild(btn);
+    // Edit button:
+    let btn2 = document.createElement("button");
+    btn2.classList = "edit-btn";
+    btn2.textContent = "Edit";
+    card.appendChild(btn2);
+    // Name:
+    let name = document.createElement("h3");
+    name.classList = "card-name";
+    name.textContent = object.name;
+    card.appendChild(name);
+    // Weight:
+    let weight = document.createElement("p");
+    weight.classList = "card-weight";
+    weight.textContent = "Weight: " + object.weight;
+    card.appendChild(weight);
+    // Reps:
+    let reps = document.createElement("ul");
+    reps.classList = "card-reps";
+    for (let i = 0; i < object.reps.reps.length; i++) {
+      let li = document.createElement("li");
+      li.textContent = "Set " + (i + 1) + ": " + object.reps.reps[i];
+      reps.appendChild(li);
+    }
+    card.appendChild(reps);
     // Append to container:
+    card_container.appendChild(card);
   }
 }
 
