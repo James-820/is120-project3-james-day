@@ -14,19 +14,38 @@ header {
   padding: 1rem;
 }
 
+main {
+  margin: 1rem;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  row-gap: 1rem;
+
+  margin-bottom: 1rem;
+}
+
 .card {
   display: grid;
-  grid-template: auto auto auto auto / auto 1fr;
+  grid-template: auto auto auto auto / auto auto 1fr;
   grid-template-areas:
-    "n n"
-    "w w"
-    "r r"
-    "delete edit";
+    "n n n"
+    "w w w"
+    "r r r"
+    "delete edit space";
   column-gap: 1rem;
   row-gap: 0.5rem;
 
   padding: 1rem;
   border: 2px solid black;
+}
+
+button {
+  border-radius: 0.5rem;
+  padding: 0.5rem;
 }
 
 .delete-btn {

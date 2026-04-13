@@ -5,6 +5,12 @@ const db = supabase.createClient(
 );
 
 let card_container = document.querySelector("#card-container");
+let in_name = document.querySelector("#in-name");
+let in_weight = document.querySelector("#in-weight");
+let in_reps = document.querySelector("#in-reps");
+let add_btn = document.querySelector("#add-btn");
+add_btn.addEventListener("click", saveInput);
+let current_edit_id = null;
 
 // Function declarations:
 // ================================================================================
@@ -30,6 +36,7 @@ function renderAll(t_data) {
     let btn2 = document.createElement("button");
     btn2.classList = "edit-btn";
     btn2.textContent = "Edit";
+    btn2.addEventListener("click", () => startEdit(object));
     card.appendChild(btn2);
     // Name:
     let name = document.createElement("h3");
@@ -53,6 +60,10 @@ function renderAll(t_data) {
     // Append to container:
     card_container.appendChild(card);
   }
+  // Clear input values:
+  in_name.value = "";
+  in_weight.value = 0;
+  in_reps.value = "";
 }
 
 // Read function:
@@ -131,6 +142,45 @@ async function updateRow(id, object) {
   console.log(data);
   // Re-read and update webpage:
   readAll();
+}
+
+// Create helper function/event listener:
+// ========================================
+function makeLiftObject() {
+  // As dangerous as it is, I will assume correct user input
+  let name = in_name.value;
+  let weight = in_weight.value;
+  let reps = { reps: in_reps.value.split(", ") };
+  let object = { name: name, weight: weight, reps: reps };
+  return object;
+}
+
+// Update/Create helper function:
+// ========================================
+function saveInput() {
+  let obj = makeLiftObject();
+  if (current_edit_id === null) {
+    createRow(obj);
+  } else {
+    updateRow(current_edit_id, obj);
+    current_edit_id = null;
+    add_btn.textContent = "Add";
+  }
+}
+
+// Edit helper:
+// ========================================
+function startEdit(entry) {
+  in_name.value = entry.name;
+  in_name.focus();
+  in_weight.value = entry.weight;
+  let rep_list = "";
+  for (const num in entry.reps.reps) {
+    rep_list += num + ", ";
+  }
+  in_reps.value = rep_list;
+  current_edit_id = entry.id;
+  add_btn.textContent = "Save Edit";
 }
 
 // On load:
